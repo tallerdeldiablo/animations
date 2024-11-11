@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elastic Bounce Animation</title>
+    <style>
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f0f0f0; 
+        }
+        canvas { 
+            border: 1px solid black; 
+        }
+    </style>
+</head>
+<body>
+    <canvas id="animationCanvas" width="600" height="400"></canvas>
+    <script>
+        (function() {
+          const canvas = document.getElementById('animationCanvas');
+          const ctx = canvas.getContext('2d');
+        
+          const ball = {
+            x: canvas.width / 2,
+            y: 50,
+            radius: 20,
+            velocityY: 0,
+            acceleration: 0.5,
+            damping: 0.8,
+            bounce: -0.7
+          };
+        
+          function drawBall() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'blue';
+            ctx.fill();
+            ctx.closePath();
+          }
+        
+          function updateBall() {
+            ball.velocityY += ball.acceleration;
+            ball.y += ball.velocityY;
+        
+            if (ball.y + ball.radius > canvas.height) {
+              ball.y = canvas.height - ball.radius;
+              ball.velocityY *= ball.bounce;
+              ball.velocityY *= ball.damping;
+            }
+          }
+        
+          function animate() {
+            updateBall();
+            drawBall();
+            requestAnimationFrame(animate);
+          }
+        
+          animate();
+        })();
+    </script>
+</body>
+</html>
