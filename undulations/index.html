@@ -31,7 +31,49 @@ phaseOffset = ((position[0]%wl)/wl)*2*Math.PI;
 theta = Math.atan(Math.cos(2*Math.PI*xFreq*time + phaseOffset));
 radiansToDegrees(theta)/damping;
     </code></pre>
-    <script src="js/undulations.js"></script>
+    <script src="js/undulations.js"> const canvas = document.getElementById('animationCanvas');
+const ctx = canvas.getContext('2d');
+
+const compWidth = canvas.width;
+const compHeight = canvas.height;
+
+const xAmp = 30; // height of undulations (pixels)
+const xFreq = 0.3; // undulations per second
+const xSpeed = 150; // speed of wave (pixels per second)
+const damping = 15; // undulation damping factor
+
+const wl = xSpeed / xFreq; // wavelength (pixels)
+let time = 0;
+
+function drawUndulations() {
+    ctx.clearRect(0, 0, compWidth, compHeight);
+
+    const numObjects = 20; // Number of objects to simulate
+    const spacing = compWidth / numObjects;
+
+    for (let i = 0; i < numObjects; i++) {
+        const x = i * spacing;
+        const phaseOffset = ((x % wl) / wl) * 2 * Math.PI;
+        const y = xAmp * Math.sin(2 * Math.PI * xFreq * time + phaseOffset);
+
+        const theta = Math.atan(Math.cos(2 * Math.PI * xFreq * time + phaseOffset));
+        const rotation = theta / damping;
+
+        // Draw the object
+        ctx.save();
+        ctx.translate(x, compHeight / 2 + y);
+        ctx.rotate(rotation);
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(-10, -10, 20, 20);
+        ctx.restore();
+    }
+
+    time += 0.016; // Increment time assuming 60 FPS
+    requestAnimationFrame(drawUndulations);
+}
+
+requestAnimationFrame(drawUndulations);
+</script>
     <footer>
         <p>Content source: <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">Dan Ebberts' AE Expressions and Scripting Resource</a></p>
         <p>This resource aims to make Dan Ebberts' valuable After Effects knowledge accessible again. All credit goes to him.</p>
