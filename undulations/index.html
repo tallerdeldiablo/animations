@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undulations</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <canvas id="animationCanvas" width="800" height="600"></canvas>
+    <pre><code>
+// After Effects Undulations Expressions
+
+// Position Expression
+xAmp = 3; // height of undulations (pixels)
+xFreq = .3; // undulations per second
+xSpeed = 150; // speed of wave (pixels per second)
+
+wl = xSpeed/xFreq; // wavelength (pixels)
+phaseOffset = ((position[0]%wl)/wl)*2*Math.PI;
+y = xAmp*Math.sin(2*Math.PI*xFreq*time + phaseOffset);
+value + [0,y]
+
+// Rotation Expression
+xFreq = .3; // undulations per second
+xSpeed = 150; // speed of wave (pixels per second)
+damping = 15; // undulation damping factor
+
+wl = xSpeed/xFreq; // wavelength (pixels)
+phaseOffset = ((position[0]%wl)/wl)*2*Math.PI;
+theta = Math.atan(Math.cos(2*Math.PI*xFreq*time + phaseOffset));
+radiansToDegrees(theta)/damping;
+    </code></pre>
+    <script src="js/undulations.js"></script>
+    <footer>
+        <p>Content source: <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">Dan Ebberts' AE Expressions and Scripting Resource</a></p>
+        <p>This resource aims to make Dan Ebberts' valuable After Effects knowledge accessible again. All credit goes to him.</p>
+    </footer>
+</body>
+</html>
