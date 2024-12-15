@@ -1,1 +1,85 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particle System Animation</title>
+    <style>
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f0f0f0; 
+        }
+        canvas { 
+            border: 1px solid black; 
+        }
+    </style>
+</head>
+<body>
+    <canvas id="animationCanvas" width="600" height="400"></canvas>
+    <script>
+        (function() {
+          const canvas = document.getElementById('animationCanvas');
+          const ctx = canvas.getContext('2d');
+          
+          const particles = [];
+          const numParticles = 100;
+          const gravity = 0.1;
+          const lifeSpan = 100;
+          
+          function createParticle() {
+            return {
+              x: canvas.width / 2,
+              y: canvas.height / 2,
+              velocityX: (Math.random() - 0.5) * 4,
+              velocityY: (Math.random() - 0.5) * 4,
+              life: lifeSpan
+            };
+          }
+          
+          for (let i = 0; i < numParticles; i++) {
+            particles.push(createParticle());
+          }
+          
+          function drawParticle(particle) {
+            ctx.beginPath();
+            ctx.arc(particle.x, particle.y, 2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 0, 255, ${particle.life / lifeSpan})`;
+            ctx.fill();
+            ctx.closePath();
+          }
+          
+          function updateParticles() {
+            for (let i = 0; i < particles.length; i++) {
+              const p = particles[i];
+              p.x += p.velocityX;
+              p.y += p.velocityY;
+              p.velocityY += gravity;
+              p.life--;
+              
+              if (p.life <= 0) {
+                particles[i] = createParticle();
+              }
+            }
+          }
+          
+          function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            updateParticles();
+            
+            for (const particle of particles) {
+              drawParticle(particle);
+            }
+            
+            requestAnimationFrame(animate);
+          }
+          
+          animate();
+        })();
+    </script>
+</body>
+</html>
