@@ -1,25 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bounce Animation</title>
-    <style>
-        body { 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            height: 100vh; 
-            margin: 0; 
-            background-color: #f0f0f0; 
-        }
-        canvas { 
-            border: 1px solid black; 
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <title>JS Animations Showcase</title>
+  <style>
+
+  </style>
 </head>
+
 <body>
-    <canvas id="animationCanvas" width="600" height="400"></canvas>
-    <script src="bounce.js"></script> <!-- This will link to the specific animation JS file -->
+  <header class="hero">
+    <h1><i class="fas fa-magic"></i> JS Animations Showcase</h1>
+    <p>Click on an animation button to see various JavaScript animation effects!</p>
+  </header>
+
+  <main>
+    <div class="card">
+      <h3 class="card-header">Animations</h3>
+      <div id="repos-container" class="card-body">
+        <!-- Buttons generated dynamically here -->
+      </div>
+    </div>
+
+    <div class="card">
+      <h3 class="card-header">Animation Preview</h3>
+      <iframe id="animation-container" class="animation-box"></iframe>
+    </div>
+  </main>
+
+  <script>
+    const repoContainerEl = document.querySelector('#repos-container');
+    const getRepoContents = (owner, repo) => {
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
+      fetch(apiUrl)
+        .then(response => {
+          if (response.ok) {
+            response.json().then(data => displayRepoContents(data));
+          } else {
+            alert('Error: ' + response.statusText);
+          }
+        })
+        .catch(() => alert('Unable to connect to GitHub'));
+    };
+
+    var displayRepoContents = function (contents) {
+  repoContainerEl.innerHTML = ''; // Clear any existing content
+
+  // Start the loop from the second item (index 1) to skip the first
+  contents.slice(1).forEach(function (item) {
+    if (item.type === 'dir') { // Only process directories
+      var button = document.createElement('button');
+      button.textContent = `${item.name} Animation`;
+      button.classList.add('btn');
+      button.setAttribute('data-file', item.path);
+      button.onclick = function () {
+        var animationContainerEl = document.querySelector('#animation-container');
+        animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.path}/`;
+      };
+      repoContainerEl.appendChild(button);
+    }
+  });
+};
+
+
+    getRepoContents('tallerdeldiablo', 'animations');
+  </script>
 </body>
+
 </html>
