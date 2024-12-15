@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Animations</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bounce Animation</title>
+    <style>
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            background-color: #f0f0f0; 
+        }
+        canvas { 
+            border: 1px solid black; 
+        }
+    </style>
 </head>
 <body>
-  <h1>My Animations</h1>
-  <ul>
-    <li><a href="./bounce/">Bounce Animation</a></li>
-    <li><a href="./undulations/">Undulations Animation</a></li>
-    <li><a href="./vibrating/">Vibrating Animation</a></li>
-    <li><a href="bounce.html">Bounce HTML</a></li>
-    <li><a href="jack.html">Jack HTML</a></li>
-  </ul>
+    <canvas id="animationCanvas" width="600" height="400"></canvas>
+    <script src="bounce.js"></script> <!-- This will link to the specific animation JS file -->
 </body>
 </html>
