@@ -2,29 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Animations</title>
 </head>
 <body>
   <h1>My Animations</h1>
-  <ul id="animation-list"></ul>
-
-  <script>
-    const animations = [
-      { name: 'Animation 1', path: 'animation1/index.html' },
-      { name: 'Animation 2', path: 'animation2/index.html' }
-    ];
-
-    const list = document.getElementById('animation-list');
-    animations.forEach(animation => {
-      const link = document.createElement('a');
-      link.href = animation.path;
-      link.textContent = animation.name;
-      link.target = '_blank';
-
-      const listItem = document.createElement('li');
-      listItem.appendChild(link);
-      list.appendChild(listItem);
-    });
-  </script>
+  <ul>
+    <li><a href="./bounce/">Bounce Animation</a></li>
+    <li><a href="./undulations/">Undulations Animation</a></li>
+    <li><a href="./vibrating/">Vibrating Animation</a></li>
+    <li><a href="bounce.html">Bounce HTML</a></li>
+    <li><a href="jack.html">Jack HTML</a></li>
+  </ul>
 </body>
 </html>
