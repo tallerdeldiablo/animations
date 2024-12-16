@@ -12,7 +12,7 @@ const maxRotationSpeed = 360; // max rotation speed in degrees per second
 const numParticles = 100; // number of particles
 
 let particles = [];
-a
+
 function initParticles() {
     for (let i = 0; i < numParticles; i++) {
         particles.push(createParticle());
