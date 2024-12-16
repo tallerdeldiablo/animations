@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spirograph</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <canvas id="animationCanvas" width="800" height="600"></canvas>
+    <pre><code>
+// After Effects Spirograph Expression
+
+r1 = 43; 
+r2 = -14; 
+o = 53; 
+v = 15;
+s = 2.5;
+
+r = r1 + r2; 
+x = r*Math.cos(time*v) - (r2 + o)*Math.cos(r*time*v/r2); 
+y = r*Math.sin(time*v) - (r2 + o)*Math.sin(r*time*v/r2); 
+[s*x + thisComp.width/2, s*y + thisComp.height/2];
+    </code></pre>
+    <script src="js/spirograph.js"></script>
+    <footer>
+        <p>Content source: <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">Dan Ebberts' AE Expressions and Scripting Resource</a></p>
+        <p>This resource aims to make Dan Ebberts' valuable After Effects knowledge accessible again. All credit goes to him.</p>
+    </footer>
+</body>
+</html>
