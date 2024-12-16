@@ -13,6 +13,7 @@
   </style>
 </head>
 
+
 <body>
   <header class="hero">
     <h1><i class="fas fa-magic"></i> JS Animations Showcase</h1>
@@ -20,6 +21,7 @@
   </header>
 
   <main>
+    <!-- Left Section: Animations List -->
     <div class="card">
       <h3 class="card-header">Animations</h3>
       <div id="repos-container" class="card-body">
@@ -27,9 +29,23 @@
       </div>
     </div>
 
-    <div class="card">
-      <h3 class="card-header">Animation Preview</h3>
-      <iframe id="animation-container" class="animation-box"></iframe>
+    <!-- Right Section: Preview & Details -->
+    <div class="right-panel">
+      <div class="card">
+        <h3 class="card-header">Animation Preview</h3>
+        <iframe id="animation-container" class="animation-box"></iframe>
+      </div>
+
+      <!-- Static Content Below Preview -->
+      <div class="card details-box">
+        <h3 class="card-header">Animation Info</h3>
+        <div class="card-body">
+          <p>Content source: 
+            <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">Dan Ebberts' AE Expressions and Scripting Resource</a>
+          </p>
+          <p>This resource aims to make Dan Ebberts' valuable After Effects knowledge accessible again. All credit goes to him.</p>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -48,28 +64,26 @@
         .catch(() => alert('Unable to connect to GitHub'));
     };
 
-    var displayRepoContents = function (contents) {
-  repoContainerEl.innerHTML = ''; // Clear any existing content
-
-  // Start the loop from the second item (index 1) to skip the first
-  contents.slice(1).forEach(function (item) {
-    if (item.type === 'dir') { // Only process directories
-      var button = document.createElement('button');
-      button.textContent = `${item.name} Animation`;
-      button.classList.add('btn');
-      button.setAttribute('data-file', item.path);
-      button.onclick = function () {
-        var animationContainerEl = document.querySelector('#animation-container');
-        animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.path}/`;
-      };
-      repoContainerEl.appendChild(button);
-    }
-  });
-};
-
+    const displayRepoContents = contents => {
+      repoContainerEl.innerHTML = '';
+      contents.slice(1).forEach(item => {
+        if (item.type === 'dir') {
+          const button = document.createElement('button');
+          button.textContent = `${item.name} Animation`;
+          button.classList.add('btn');
+          button.setAttribute('data-file', item.path);
+          button.onclick = () => {
+            const animationContainerEl = document.querySelector('#animation-container');
+            animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.path}/`;
+          };
+          repoContainerEl.appendChild(button);
+        }
+      });
+    };
 
     getRepoContents('tallerdeldiablo', 'animations');
   </script>
 </body>
 
 </html>
+
