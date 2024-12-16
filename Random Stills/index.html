@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Stills</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+</head>
+<body>
+    <canvas id="animationCanvas" width="800" height="600"></canvas>
+    <pre><code>
+// After Effects Random Stills Expressions
+
+// Slider Control Expression
+duration = .125; // length of each cut (seconds)
+
+seed = Math.floor(time/duration) + 1; 
+seedRandom(seed,true); 
+Math.floor(random(1,index)) 
+
+// Opacity Expression
+slider = thisComp.layer("Null 1").effect("Slider Control").param("Slider")
+if(index == slider){ 100 }else{ 0 }
+    </code></pre>
+    <script src="js/randomStills.js"></script>
+    <footer>
+        <p>Content source: <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">Dan Ebberts' AE Expressions and Scripting Resource</a></p>
+        <p>This resource aims to make Dan Ebberts' valuable After Effects knowledge accessible again. All credit goes to him.</p>
+    </footer>
+</body>
+</html>
