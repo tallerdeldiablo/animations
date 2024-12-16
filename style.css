@@ -20,7 +20,7 @@ main {
   gap: 20px;
 }
 
-/* Shared Styles */
+/* Shared Card Styles */
 .card {
   background-color: var(--tertiary);
   border: 3px solid var(--dark);
@@ -41,6 +41,7 @@ main {
   padding: 15px;
 }
 
+/* Buttons in Left Panel */
 #repos-container {
   display: flex;
   flex-direction: column;
@@ -64,6 +65,7 @@ main {
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Animation Preview */
 .animation-box {
   width: 100%;
   height: 500px;
@@ -71,6 +73,7 @@ main {
   border-radius: var(--border-radius);
 }
 
+/* Details Box */
 .details-box {
   padding: 15px;
   border: 3px solid var(--dark);
