@@ -1,3 +1,43 @@
+/* CSS Variables for Theme */
+:root {
+  --primary: #ffdd57;    /* Bright Yellow */
+  --secondary: #ff7f50;  /* Coral */
+  --tertiary: #6ac5fe;   /* Light Blue */
+  --light-dark: #4b4b4b; /* Light Dark Grey */
+  --dark: #222831;       /* Dark Grey */
+  --border-radius: 0.3rem;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background-color: var(--primary);
+  color: var(--dark);
+  line-height: 1.5;
+}
+
+/* Hero Section */
+.hero {
+  padding: 20px;
+  text-align: center;
+  background-color: var(--dark);
+  color: var(--primary);
+}
+
+.hero h1 {
+  margin: 0;
+}
+
+.hero p {
+  margin: 10px 0 0;
+}
+
 /* Layout */
 main {
   display: flex;
@@ -26,6 +66,7 @@ main {
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  padding: 15px;
 }
 
 .card-header {
