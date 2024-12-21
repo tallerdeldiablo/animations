@@ -1,24 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swinging, Flickering Light</title>
-</head>
-<body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    
-    <!-- After Effects Info Section -->
-    <div class="after-effects-info">
-        <h3>After Effects Script</h3>
-        <pre><code>
 // After Effects Swinging, Flickering Light Expressions
 
 // Light Intensity Expression
 minSeg = 1.5; //minimum interval (must be > 0) 
 maxSeg = 2.5; //maximum interval (must be > minSeg) 
 minFlicker = .5; //must be less than minSeg 
-maxFlicker = 1; // must be less than minSeg 
+maxFlicker = 1; //must be less than minSeg 
 
 segStartTime = 0; //initial conditions 
 segEndTime = 0; 
@@ -44,10 +30,3 @@ amplitude = 7;
 period = 3; //seconds
 
 amplitude*Math.sin(time*Math.PI*2/period)
-        </code></pre>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
-    <script src="jackInTheBoxAnimation.js"></script>
-</body>
-</html>
