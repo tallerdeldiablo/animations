@@ -8,17 +8,15 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <title>JS Animations Showcase</title>
   <style>
-    /* CSS Variables for Theme */
+    /* Variables para colores */
     :root {
-      --primary: #ffdd57; /* Bright Yellow */
+      --primary: #ffdd57; /* Amarillo brillante */
       --secondary: #ff7f50; /* Coral */
-      --tertiary: #6ac5fe; /* Light Blue */
-      --light-dark: #4b4b4b; /* Light Dark Grey */
-      --dark: #222831; /* Dark Grey */
-      --border-radius: 0.3rem;
+      --tertiary: #6ac5fe; /* Azul claro */
+      --dark: #222831; /* Gris oscuro */
     }
 
-    /* Reset and Base Styles */
+    /* Reset básico */
     * {
       margin: 0;
       padding: 0;
@@ -26,15 +24,15 @@
     }
 
     body {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: Arial, sans-serif;
       background-color: var(--primary);
       color: var(--dark);
       line-height: 1.5;
     }
 
     .hero {
-      padding: 20px;
       text-align: center;
+      padding: 20px;
       background-color: var(--dark);
       color: var(--primary);
     }
@@ -43,23 +41,19 @@
       margin: 0;
     }
 
-    .hero p {
-      margin: 10px 0 0;
-    }
-
-    /* Layout */
     main {
       display: flex;
-      flex-wrap: nowrap;
       gap: 20px;
       padding: 20px;
     }
 
+    /* Panel izquierdo */
     .left-panel {
       width: 25%;
       min-width: 200px;
     }
 
+    /* Panel derecho */
     .right-panel {
       width: 75%;
       display: flex;
@@ -69,67 +63,68 @@
 
     .card {
       background-color: var(--tertiary);
-      border: 3px solid var(--dark);
-      border-radius: var(--border-radius);
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      border: 2px solid var(--dark);
       padding: 15px;
+      border-radius: 5px;
     }
 
     .card-header {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: var(--dark);
-      padding: 15px;
       text-align: center;
       font-weight: bold;
-      text-transform: uppercase;
+      background: var(--secondary);
+      padding: 10px;
+      color: var(--dark);
     }
 
     .card-body {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      padding: 15px;
     }
 
+    /* Contenedor de animación y script */
     .animation-preview {
       display: flex;
-      gap: 20px;
-      height: 500px;
+      gap: 10px;
     }
 
-    .preview-box {
-      flex: 1; /* Take up 50% */
-      border: 2px solid var(--light-dark);
-      border-radius: var(--border-radius);
-      background-color: #ffffff;
-    }
-
+    .preview-box,
     .script-box {
-      flex: 1; /* Take up 50% */
-      border: 2px solid var(--light-dark);
-      border-radius: var(--border-radius);
-      background-color: #ffffff;
-      overflow: auto;
+      flex: 1;
+      border: 2px solid var(--dark);
+      border-radius: 5px;
+      background-color: white;
       padding: 10px;
-      font-family: 'Courier New', monospace;
-      white-space: pre-wrap;
     }
 
     .btn {
-      font-size: 1rem;
-      padding: 10px 15px;
-      border-radius: var(--border-radius);
-      color: var(--primary);
-      background: linear-gradient(135deg, var(--secondary), var(--tertiary));
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      padding: 10px;
+      background: var(--secondary);
+      color: white;
       border: none;
+      border-radius: 5px;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: 0.2s;
     }
 
     .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+      background: var(--dark);
+      color: var(--primary);
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: var(--dark);
+      color: var(--primary);
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    footer a {
+      color: var(--secondary);
+      text-decoration: none;
     }
   </style>
 </head>
@@ -164,6 +159,15 @@
     </div>
   </main>
 
+  <footer>
+    <p>Content source: 
+      <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">
+        Dan Ebberts' AE Expressions and Scripting Resource
+      </a>
+    </p>
+    <p>All credit goes to Dan Ebberts. This resource aims to make his After Effects knowledge accessible again.</p>
+  </footer>
+
   <script>
     const repoContainerEl = document.querySelector('#repos-container');
 
@@ -182,7 +186,9 @@
 
     const displayRepoContents = contents => {
       repoContainerEl.innerHTML = '';
-      contents.forEach(item => {
+
+      // Saltar el primer elemento
+      contents.slice(1).forEach(item => {
         if (item.type === 'dir') {
           const button = document.createElement('button');
           button.textContent = `${item.name} Animation`;
@@ -194,9 +200,12 @@
             const scriptBox = document.querySelector('#script-box');
             const scriptFile = `${item.name}/script.txt`;
             fetch(scriptFile)
-              .then(response => response.text())
+              .then(response => {
+                if (!response.ok) throw new Error('File not found');
+                return response.text();
+              })
               .then(data => {
-                scriptBox.textContent = data;
+                scriptBox.textContent = data; // Mostrar texto plano
               })
               .catch(() => {
                 scriptBox.textContent = 'Script not available.';
