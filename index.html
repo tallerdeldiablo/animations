@@ -1,66 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Animations Showcase</title>
-    <!-- Link to the main shared CSS file -->
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <title>JS Animations Showcase</title>
 </head>
+
 <body>
-    <header class="hero">
-        <h1>JavaScript Animations Showcase</h1>
-        <p>Explore animations and After Effects scripts dynamically!</p>
-    </header>
+  <header class="hero">
+    <h1><i class="fas fa-magic"></i> JS Animations Showcase</h1>
+    <p>Click on an animation button to see various JavaScript animation effects!</p>
+  </header>
 
-    <main>
-        <!-- Left Panel for Animations List -->
-        <div class="left-panel card">
-            <h3 class="card-header">Animations</h3>
-            <div id="repos-container" class="card-body">
-                <!-- Buttons for animations will be dynamically generated here -->
-            </div>
-        </div>
+  <main>
+    <!-- Left Section: Animations List -->
+    <div class="left-panel card">
+      <h3 class="card-header">Animations</h3>
+      <div id="repos-container" class="card-body">
+        <!-- Buttons generated dynamically here -->
+      </div>
+    </div>
 
-        <!-- Right Panel for Animation Preview and After Effects Script -->
-        <div class="right-panel">
-            <div class="card">
-                <h3 class="card-header">Animation Preview</h3>
-                <canvas id="animationCanvas" class="animation-box" width="800" height="600"></canvas>
-            </div>
+    <!-- Right Section: Preview & Info -->
+    <div class="right-panel">
+      <!-- Animation Preview -->
+      <div class="card">
+        <h3 class="card-header">Animation Preview</h3>
+        <iframe id="animation-container" class="animation-box"></iframe>
+      </div>
 
-            <div class="card details-box">
-                <h3>After Effects Script</h3>
-                <pre id="afterEffectsText">Loading script...</pre>
-            </div>
-        </div>
-    </main>
+      <!-- After Effects Script Info -->
+      <div class="card details-box">
+        <h3 class="card-header">Animation Info</h3>
+        <pre id="scriptText">Select an animation to view its After Effects script.</pre>
+      </div>
+    </div>
+  </main>
 
-    <!-- JavaScript Files -->
-    <script src="loadScript.js"></script> <!-- Script directly in root -->
-    <script>
-        // Dynamically load an animation script and After Effects script
-        const loadAnimation = (animationFolder, scriptFile) => {
-            // Set the canvas animation script dynamically
-            const script = document.createElement('script');
-            script.src = `${animationFolder}/${scriptFile}`;
-            document.body.appendChild(script);
+  <script src="./loadScript.js"></script>
+  <script>
+    const repoContainerEl = document.querySelector('#repos-container');
 
-            // Load After Effects text file dynamically
-            const textFile = `${animationFolder}/script.txt`;
-            fetch(textFile)
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('afterEffectsText').textContent = data;
-                })
-                .catch(error => {
-                    console.error('Error loading After Effects script:', error);
-                    document.getElementById('afterEffectsText').textContent = 'Unable to load script.';
-                });
-        };
+    const getRepoContents = (owner, repo) => {
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
+      fetch(apiUrl)
+        .then(response => {
+          if (response.ok) {
+            response.json().then(data => displayRepoContents(data));
+          } else {
+            alert('Error: ' + response.statusText);
+          }
+        })
+        .catch(() => alert('Unable to connect to GitHub'));
+    };
 
-        // Example: Load default animation on page load
-        loadAnimation('BorderLines', 'borderLinesAnimation.js');
-    </script>
+    const displayRepoContents = contents => {
+      repoContainerEl.innerHTML = '';
+      contents.forEach(item => {
+        if (item.type === 'dir') {
+          const button = document.createElement('button');
+          button.textContent = `${item.name} Animation`;
+          button.classList.add('btn');
+          button.onclick = () => {
+            // Update animation iframe
+            const animationContainerEl = document.querySelector('#animation-container');
+            animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
+
+            // Load After Effects script dynamically
+            const scriptFile = `${item.name}/script.txt`;
+            fetch(scriptFile)
+              .then(response => response.text())
+              .then(data => {
+                document.getElementById('scriptText').textContent = data;
+              })
+              .catch(() => {
+                document.getElementById('scriptText').textContent = 'Script not available.';
+              });
+          };
+          repoContainerEl.appendChild(button);
+        }
+      });
+    };
+
+    // Load the contents of the repository
+    getRepoContents('tallerdeldiablo', 'animations');
+  </script>
 </body>
+
 </html>
