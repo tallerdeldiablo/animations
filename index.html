@@ -17,34 +17,34 @@
   </header>
 
   <main>
-    <!-- Left Section: Animations List -->
+    <!-- Left Panel: Animations List -->
     <div class="left-panel card">
       <h3 class="card-header">Animations</h3>
       <div id="repos-container" class="card-body">
-        <!-- Buttons generated dynamically here -->
+        <!-- Buttons will be dynamically generated here -->
       </div>
     </div>
 
-    <!-- Right Section: Preview & Info -->
+    <!-- Right Panel: Preview & Info -->
     <div class="right-panel">
-      <!-- Animation Preview -->
+      <!-- Animation Preview Section -->
       <div class="card">
         <h3 class="card-header">Animation Preview</h3>
         <iframe id="animation-container" class="animation-box"></iframe>
       </div>
 
-      <!-- After Effects Script Info -->
+      <!-- After Effects Script Section -->
       <div class="card details-box">
         <h3 class="card-header">Animation Info</h3>
-        <pre id="scriptText">Select an animation to view its After Effects script.</pre>
+        <pre id="afterEffectsText">Select an animation to view its After Effects script.</pre>
       </div>
     </div>
   </main>
 
-  <script src="./loadScript.js"></script>
   <script>
     const repoContainerEl = document.querySelector('#repos-container');
 
+    // Function to fetch the contents of the GitHub repository
     const getRepoContents = (owner, repo) => {
       const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
       fetch(apiUrl)
@@ -58,6 +58,7 @@
         .catch(() => alert('Unable to connect to GitHub'));
     };
 
+    // Function to display repository contents as buttons
     const displayRepoContents = contents => {
       repoContainerEl.innerHTML = '';
       contents.forEach(item => {
@@ -66,7 +67,7 @@
           button.textContent = `${item.name} Animation`;
           button.classList.add('btn');
           button.onclick = () => {
-            // Update animation iframe
+            // Update iframe source to display the animation
             const animationContainerEl = document.querySelector('#animation-container');
             animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
 
@@ -75,10 +76,10 @@
             fetch(scriptFile)
               .then(response => response.text())
               .then(data => {
-                document.getElementById('scriptText').textContent = data;
+                document.getElementById('afterEffectsText').textContent = data;
               })
               .catch(() => {
-                document.getElementById('scriptText').textContent = 'Script not available.';
+                document.getElementById('afterEffectsText').textContent = 'Script not available.';
               });
           };
           repoContainerEl.appendChild(button);
@@ -86,7 +87,7 @@
       });
     };
 
-    // Load the contents of the repository
+    // Initialize by loading repository contents
     getRepoContents('tallerdeldiablo', 'animations');
   </script>
 </body>

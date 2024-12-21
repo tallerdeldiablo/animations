@@ -1,3 +1,4 @@
+/* CSS Variables for Theme */
 :root {
   --primary: #ffdd57;    /* Bright Yellow */
   --secondary: #ff7f50;  /* Coral */
@@ -21,7 +22,6 @@ body {
   line-height: 1.5;
 }
 
-/* Hero Section */
 .hero {
   padding: 20px;
   text-align: center;
@@ -45,13 +45,13 @@ main {
   padding: 20px;
 }
 
-/* Left Panel - 25% Width */
+/* Left Panel */
 .left-panel {
   width: 25%;
   min-width: 200px;
 }
 
-/* Right Panel - 75% Width */
+/* Right Panel */
 .right-panel {
   width: 75%;
   display: flex;
@@ -59,14 +59,12 @@ main {
   gap: 20px;
 }
 
-/* Shared Card Styles */
 .card {
   background-color: var(--tertiary);
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
   padding: 15px;
-  margin-bottom: 20px; /* Espaciado entre tarjetas */
 }
 
 .card-header {
@@ -82,7 +80,6 @@ main {
   padding: 15px;
 }
 
-/* Buttons in Left Panel */
 #repos-container {
   display: flex;
   flex-direction: column;
@@ -106,44 +103,17 @@ main {
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Animation Preview */
 .animation-box {
   width: 100%;
   height: 500px;
   border: 2px solid var(--light-dark);
   border-radius: var(--border-radius);
-  max-width: 800px;
-  margin: 0 auto;
 }
 
-/* Details Box */
 .details-box {
   padding: 15px;
   border: 3px solid var(--dark);
   border-radius: var(--border-radius);
   background-color: var(--tertiary);
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  overflow-x: auto;
-  white-space: pre-wrap;
-  font-family: monospace;
-}
-
-/* Code Styling */
-pre {
-  background-color: #f8f8f8;
-  padding: 10px;
-  border-radius: var(--border-radius);
-  font-size: 14px;
-  color: #222;
-  overflow-x: auto;
-  line-height: 1.6;
-  margin: 10px 0;
-}
-
-code {
-  font-family: monospace;
-  background-color: #f4f4f4;
-  padding: 2px 4px;
-  border-radius: 4px;
-  color: #333;
 }
