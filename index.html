@@ -6,8 +6,132 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-  <link rel="stylesheet" href="./styles.css">
   <title>JS Animations Showcase</title>
+  <style>
+    /* CSS Variables for Theme */
+    :root {
+      --primary: #ffdd57; /* Bright Yellow */
+      --secondary: #ff7f50; /* Coral */
+      --tertiary: #6ac5fe; /* Light Blue */
+      --light-dark: #4b4b4b; /* Light Dark Grey */
+      --dark: #222831; /* Dark Grey */
+      --border-radius: 0.3rem;
+    }
+
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background-color: var(--primary);
+      color: var(--dark);
+      line-height: 1.5;
+    }
+
+    .hero {
+      padding: 20px;
+      text-align: center;
+      background-color: var(--dark);
+      color: var(--primary);
+    }
+
+    .hero h1 {
+      margin: 0;
+    }
+
+    .hero p {
+      margin: 10px 0 0;
+    }
+
+    /* Layout */
+    main {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .left-panel {
+      width: 25%;
+      min-width: 200px;
+    }
+
+    .right-panel {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background-color: var(--tertiary);
+      border: 3px solid var(--dark);
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      padding: 15px;
+    }
+
+    .card-header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: var(--dark);
+      padding: 15px;
+      text-align: center;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .card-body {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 15px;
+    }
+
+    .animation-preview {
+      display: flex;
+      gap: 20px;
+      height: 500px;
+    }
+
+    .preview-box {
+      flex: 1; /* Take up 50% */
+      border: 2px solid var(--light-dark);
+      border-radius: var(--border-radius);
+      background-color: #ffffff;
+    }
+
+    .script-box {
+      flex: 1; /* Take up 50% */
+      border: 2px solid var(--light-dark);
+      border-radius: var(--border-radius);
+      background-color: #ffffff;
+      overflow: auto;
+      padding: 10px;
+      font-family: 'Courier New', monospace;
+      white-space: pre-wrap;
+    }
+
+    .btn {
+      font-size: 1rem;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      color: var(--primary);
+      background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+  </style>
 </head>
 
 <body>
@@ -27,16 +151,15 @@
 
     <!-- Right Panel: Preview & Info -->
     <div class="right-panel">
-      <!-- Animation Preview Section -->
-      <div class="card">
-        <h3 class="card-header">Animation Preview</h3>
-        <iframe id="animation-container" class="animation-box"></iframe>
-      </div>
+      <!-- Combined Animation Preview and Script -->
+      <div class="card animation-preview">
+        <!-- Animation Preview (Iframe) -->
+        <iframe id="animation-container" class="preview-box"></iframe>
 
-      <!-- After Effects Script Section -->
-      <div class="card details-box">
-        <h3 class="card-header">Animation Info</h3>
-        <pre id="afterEffectsText">Select an animation to view its After Effects script.</pre>
+        <!-- Script Text Content -->
+        <div id="script-box" class="script-box">
+          Select an animation to view its After Effects script.
+        </div>
       </div>
     </div>
   </main>
@@ -44,7 +167,6 @@
   <script>
     const repoContainerEl = document.querySelector('#repos-container');
 
-    // Function to fetch the contents of the GitHub repository
     const getRepoContents = (owner, repo) => {
       const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/`;
       fetch(apiUrl)
@@ -58,7 +180,6 @@
         .catch(() => alert('Unable to connect to GitHub'));
     };
 
-    // Function to display repository contents as buttons
     const displayRepoContents = contents => {
       repoContainerEl.innerHTML = '';
       contents.forEach(item => {
@@ -67,19 +188,18 @@
           button.textContent = `${item.name} Animation`;
           button.classList.add('btn');
           button.onclick = () => {
-            // Update iframe source to display the animation
             const animationContainerEl = document.querySelector('#animation-container');
             animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
 
-            // Load After Effects script dynamically
+            const scriptBox = document.querySelector('#script-box');
             const scriptFile = `${item.name}/script.txt`;
             fetch(scriptFile)
               .then(response => response.text())
               .then(data => {
-                document.getElementById('afterEffectsText').textContent = data;
+                scriptBox.textContent = data;
               })
               .catch(() => {
-                document.getElementById('afterEffectsText').textContent = 'Script not available.';
+                scriptBox.textContent = 'Script not available.';
               });
           };
           repoContainerEl.appendChild(button);
@@ -87,7 +207,6 @@
       });
     };
 
-    // Initialize by loading repository contents
     getRepoContents('tallerdeldiablo', 'animations');
   </script>
 </body>

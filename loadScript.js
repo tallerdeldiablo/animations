@@ -1,32 +1,32 @@
-// Function to load a text file and insert its content into a specific element
-const loadScript = (file, elementId) => {
-    fetch(file)
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error(`Failed to load ${file}`);
-            }
-        })
-        .then(data => {
-            document.getElementById(elementId).textContent = data;
-        })
-        .catch(error => {
-            console.error(`Error loading the script file: ${file}`, error);
-            document.getElementById(elementId).textContent = 'Unable to load script.';
-        });
-};
-
-// Example usage to load a specific script dynamically
-// Update the path to point to your desired script file
-const loadAnimation = (folderName) => {
-    const animationContainer = document.querySelector('#animation-container');
-    const scriptTextContainer = document.querySelector('#scriptText');
-
-    // Update iframe source to load the animation
-    animationContainer.src = `https://tallerdeldiablo.github.io/animations/${folderName}/`;
-
-    // Load the After Effects script from a text file
-    const scriptPath = `${folderName}/script.txt`;
-    loadScript(scriptPath, 'scriptText');
-};
+const displayRepoContents = contents => {
+    repoContainerEl.innerHTML = '';
+    contents.forEach(item => {
+      if (item.type === 'dir') {
+        const button = document.createElement('button');
+        button.textContent = `${item.name} Animation`;
+        button.classList.add('btn');
+        button.onclick = () => {
+          // Actualizar el iframe para mostrar la animación
+          const animationContainerEl = document.querySelector('#animation-container');
+          animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
+  
+          // Cargar el contenido del archivo txt en texto plano
+          const scriptBox = document.querySelector('#script-box');
+          const scriptFile = `${item.name}/script.txt`;
+          fetch(scriptFile)
+            .then(response => {
+              if (!response.ok) throw new Error('File not found');
+              return response.text();
+            })
+            .then(data => {
+              scriptBox.textContent = data; // Asegúrate de usar textContent para texto plano
+            })
+            .catch(() => {
+              scriptBox.textContent = 'Script not available.';
+            });
+        };
+        repoContainerEl.appendChild(button);
+      }
+    });
+  };
+  
