@@ -8,15 +8,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
   <title>JS Animations Showcase</title>
   <style>
-    /* Variables para colores */
+    /* CSS Variables for Theme */
     :root {
-      --primary: #ffdd57; /* Amarillo brillante */
+      --primary: #ffdd57; /* Bright Yellow */
       --secondary: #ff7f50; /* Coral */
-      --tertiary: #6ac5fe; /* Azul claro */
-      --dark: #222831; /* Gris oscuro */
+      --tertiary: #6ac5fe; /* Light Blue */
+      --light-dark: #4b4b4b; /* Light Dark Grey */
+      --dark: #222831; /* Dark Grey */
+      --border-radius: 0.3rem;
     }
 
-    /* Reset básico */
+    /* Reset and Base Styles */
     * {
       margin: 0;
       padding: 0;
@@ -24,15 +26,15 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'IBM Plex Sans', sans-serif;
       background-color: var(--primary);
       color: var(--dark);
       line-height: 1.5;
     }
 
     .hero {
-      text-align: center;
       padding: 20px;
+      text-align: center;
       background-color: var(--dark);
       color: var(--primary);
     }
@@ -41,19 +43,23 @@
       margin: 0;
     }
 
+    .hero p {
+      margin: 10px 0 0;
+    }
+
+    /* Layout */
     main {
       display: flex;
+      flex-wrap: nowrap;
       gap: 20px;
       padding: 20px;
     }
 
-    /* Panel izquierdo */
     .left-panel {
       width: 25%;
       min-width: 200px;
     }
 
-    /* Panel derecho */
     .right-panel {
       width: 75%;
       display: flex;
@@ -63,68 +69,58 @@
 
     .card {
       background-color: var(--tertiary);
-      border: 2px solid var(--dark);
+      border: 3px solid var(--dark);
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
       padding: 15px;
-      border-radius: 5px;
     }
 
     .card-header {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: var(--dark);
+      padding: 15px;
       text-align: center;
       font-weight: bold;
-      background: var(--secondary);
-      padding: 10px;
-      color: var(--dark);
+      text-transform: uppercase;
     }
 
     .card-body {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-direction: column; /* Ensures buttons are stacked vertically */
+      gap: 10px; /* Adds spacing between buttons */
+      padding: 15px;
     }
 
-    /* Contenedor de animación y script */
-    .animation-preview {
-      display: flex;
-      gap: 10px;
+    .animation-box {
+      width: 100%;
+      height: 500px;
+      border: 2px solid var(--light-dark);
+      border-radius: var(--border-radius);
     }
 
-    .preview-box,
-    .script-box {
-      flex: 1;
-      border: 2px solid var(--dark);
-      border-radius: 5px;
-      background-color: white;
-      padding: 10px;
+    .details-box {
+      padding: 15px;
+      border: 3px solid var(--dark);
+      border-radius: var(--border-radius);
+      background-color: var(--tertiary);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
     }
 
     .btn {
-      padding: 10px;
-      background: var(--secondary);
-      color: white;
+      font-size: 1rem;
+      padding: 10px 15px;
+      border-radius: var(--border-radius);
+      color: var(--primary);
+      background: linear-gradient(135deg, var(--secondary), var(--tertiary));
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
       border: none;
-      border-radius: 5px;
       cursor: pointer;
-      transition: 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .btn:hover {
-      background: var(--dark);
-      color: var(--primary);
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: var(--dark);
-      color: var(--primary);
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
-
-    footer a {
-      color: var(--secondary);
-      text-decoration: none;
+      transform: scale(1.05);
+      box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -146,27 +142,19 @@
 
     <!-- Right Panel: Preview & Info -->
     <div class="right-panel">
-      <!-- Combined Animation Preview and Script -->
-      <div class="card animation-preview">
-        <!-- Animation Preview (Iframe) -->
-        <iframe id="animation-container" class="preview-box"></iframe>
+      <!-- Animation Preview -->
+      <div class="card">
+        <h3 class="card-header">Animation Preview</h3>
+        <iframe id="animation-container" class="animation-box"></iframe>
+      </div>
 
-        <!-- Script Text Content -->
-        <div id="script-box" class="script-box">
-          Select an animation to view its After Effects script.
-        </div>
+      <!-- After Effects Script Info -->
+      <div class="card details-box">
+        <h3 class="card-header">Animation Info</h3>
+        <pre id="afterEffectsText">Select an animation to view its After Effects script.</pre>
       </div>
     </div>
   </main>
-
-  <footer>
-    <p>Content source: 
-      <a href="https://www.motionscript.com/expressions-lab-ae65/table-of-contents.html" target="_blank">
-        Dan Ebberts' AE Expressions and Scripting Resource
-      </a>
-    </p>
-    <p>All credit goes to Dan Ebberts. This resource aims to make his After Effects knowledge accessible again.</p>
-  </footer>
 
   <script>
     const repoContainerEl = document.querySelector('#repos-container');
@@ -186,9 +174,7 @@
 
     const displayRepoContents = contents => {
       repoContainerEl.innerHTML = '';
-
-      // Saltar el primer elemento
-      contents.slice(1).forEach(item => {
+      contents.forEach(item => {
         if (item.type === 'dir') {
           const button = document.createElement('button');
           button.textContent = `${item.name} Animation`;
@@ -197,18 +183,14 @@
             const animationContainerEl = document.querySelector('#animation-container');
             animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
 
-            const scriptBox = document.querySelector('#script-box');
             const scriptFile = `${item.name}/script.txt`;
             fetch(scriptFile)
-              .then(response => {
-                if (!response.ok) throw new Error('File not found');
-                return response.text();
-              })
+              .then(response => response.text())
               .then(data => {
-                scriptBox.textContent = data; // Mostrar texto plano
+                document.getElementById('afterEffectsText').textContent = data;
               })
               .catch(() => {
-                scriptBox.textContent = 'Script not available.';
+                document.getElementById('afterEffectsText').textContent = 'Script not available.';
               });
           };
           repoContainerEl.appendChild(button);

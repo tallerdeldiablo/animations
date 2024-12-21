@@ -1,7 +1,6 @@
 const displayRepoContents = contents => {
   repoContainerEl.innerHTML = '';
 
-  // Saltar el primer elemento
   contents.slice(1).forEach(item => {
     if (item.type === 'dir') {
       const button = document.createElement('button');
@@ -12,15 +11,20 @@ const displayRepoContents = contents => {
         animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
 
         const scriptBox = document.querySelector('#script-box');
-        const scriptFile = `${item.name}/script.txt`;
+        const scriptFile = `${item.name}/script.json`;
         fetch(scriptFile)
-          .then(response => {
-            if (!response.ok) throw new Error('File not found');
-            return response.text();
-          })
+          .then(response => response.json())
           .then(data => {
-            // Reemplaza saltos de línea por <br> para respetar el formato
-            scriptBox.innerHTML = data.replace(/\n/g, '<br>');
+            // Crear formato del contenido del JSON
+            scriptBox.innerHTML = `
+              <h3>${data.title}</h3>
+              <p>${data.description}</p>
+              <h4>Expressions:</h4>
+              <pre><strong>Lower Horizontal:</strong>\n${data.expressions.lowerHorizontal}</pre>
+              <pre><strong>Upper Horizontal:</strong>\n${data.expressions.upperHorizontal}</pre>
+              <pre><strong>Right Vertical:</strong>\n${data.expressions.rightVertical}</pre>
+              <pre><strong>Left Vertical:</strong>\n${data.expressions.leftVertical}</pre>
+            `;
           })
           .catch(() => {
             scriptBox.textContent = 'Script not available.';
