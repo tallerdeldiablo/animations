@@ -1,0 +1,35 @@
+Swinging, Flickering Light
+With these expressions we'll simulate a swinging light that is flickering. The cord drives the animation. It is a narrow solid with its anchor point moved up and off-screen.The shade and the light bulb are parented to the cord
+
+Then I added a spot light and parented it to the cord also. The bulb and the light need to be positioned such that the light will illuminate the bulb.
+
+Add the following expression to the intensity parameter of the light:
+
+
+minSeg = 1.5; //minimum interval (must be > 0) 
+maxSeg = 2.5; //maximum interval (must be > minSeg) 
+minFlicker = .5; //must be less than minSeg 
+maxFlicker = 1; // must be less than minSeg 
+
+segStartTime = 0; //initial conditions 
+segEndTime = 0; 
+i = 1; 
+
+while (time >= segEndTime){ 
+i += 1; 
+seedRandom(i,true); 
+segStartTime = segEndTime; 
+segEndTime = segEndTime + random(minSeg,maxSeg); 
+} 
+
+flickerDur = random(minFlicker,maxFlicker);
+seedRandom(1,false); 
+if (time > segEndTime - flickerDur){ random(0,100) }else{ 100 }
+Add an expression like this to the rotation property of the cord to generate a nice, gentle swaying motion:
+
+
+amplitude = 7;
+period = 3; //seconds
+
+amplitude*Math.sin(time*Math.PI*2/period)
+Adjust amplitude and period as necessary.

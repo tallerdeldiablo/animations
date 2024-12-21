@@ -1,0 +1,12 @@
+Jack-in-the-Box
+This is a variation on the pendulum expression.
+
+Keyframes were applied to Jack's position at frames 0 and 1 to move him out of the box. Then this expression was applied to the position property to give him the bouncy motion:
+
+
+veloc = 35; 
+amplitude = 30; 
+decay = 1.0; 
+y = amplitude*Math.cos(veloc*time)/Math.exp(decay*time);
+value + [0,y]
+Adjust the velocity, amplitude and decay parameters as needed.

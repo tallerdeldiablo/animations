@@ -1,4 +1,4 @@
-:root {
+root {
   --primary: #ffdd57; /* Bright Yellow */
   --secondary: #ff7f50; /* Coral */
   --tertiary: #6ac5fe; /* Light Blue */
@@ -75,33 +75,24 @@ main {
 
 .card-body {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  flex-direction: column; /* Ensures buttons are stacked vertically */
+  gap: 10px; /* Adds spacing between buttons */
   padding: 15px;
 }
 
-.animation-preview {
-  display: flex;
-  gap: 20px;
+.animation-box {
+  width: 100%;
   height: 500px;
-}
-
-.preview-box {
-  flex: 1; /* Take up 50% */
   border: 2px solid var(--light-dark);
   border-radius: var(--border-radius);
-  background-color: #ffffff;
 }
 
-.script-box {
-  flex: 1; /* Take up 50% */
-  border: 2px solid var(--light-dark);
+.details-box {
+  padding: 15px;
+  border: 3px solid var(--dark);
   border-radius: var(--border-radius);
-  background-color: #ffffff;
-  overflow: auto;
-  padding: 10px;
-  font-family: 'Courier New', monospace;
-  white-space: pre-wrap;
+  background-color: var(--tertiary);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 .btn {

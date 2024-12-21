@@ -1,0 +1,66 @@
+Confetti
+Here's a little expression-based particle system that should work fine for confetti. Each layer becomes a "particle" that gets reused when its life expires. Create a small solid layer (say 15x15). Make it 3D. Apply a point control to the layer. Add this expression to the point control:
+
+
+life = 1.2;  //life of particle
+
+seedRandom(1,true);
+delay = random(life);
+if(time < delay){
+  age = 0;
+  seed = 0;
+}else{
+  age = (time - delay)%life;
+  seed = Math.floor((time - delay)/life) + 3;
+}  
+[seed,age]
+Add this expression to the position property:
+
+
+minSpeed = 100;  //minimum speed in y direction (pixels per second)
+maxSpeed = 150;
+maxDrift = 100;  // maximum drift in x direction
+
+seed = Math.round(effect("Point Control").param("Point")[0]);
+age = effect("Point Control").param("Point")[1];
+if(seed == 0){
+  [0,-10,0]
+}else{
+  seedRandom(seed,true);
+  currSpeed = random(minSpeed,maxSpeed);
+  drift = random(-maxDrift,maxDrift);
+  origin = [random(0,thisComp.width),-10,0];
+  origin  + [age*drift,age*currSpeed,0];
+}
+Add this expression to the orientation property:
+
+
+m = 360; //max rotation speed in degrees per second
+
+seed = Math.round(effect("Point Control").param("Point")[0]);
+age = effect("Point Control").param("Point")[1];
+if (seed == 0){
+  [0,0,0]
+}else{
+  seedRandom(seed,true);
+  rotSpeed = random([-m,-m,-m],[m,m,m])
+  initOrient = random([360,360,360]);
+  initOrient + rotSpeed*age
+}
+Finally, add this expression to the z-rotation property:
+
+
+m = 360; //max rotation speed in degrees per second
+
+seed = Math.round(effect("Point Control").param("Point")[0]);
+age = effect("Point Control").param("Point")[1];
+if (seed == 0){
+  0
+}else{
+  seedRandom(seed,true);
+  rotSpeed = random(-m,m)
+  rotSpeed*age
+}
+Adjust minSpeed, maxSpeed, maxDrift, and the two rotation parameters (m) to suit your needs.
+ If you decrease minSpeed, you may have to increase the "life" parameter of the point control or the particles may disappear as they reach the bottom of the page.
+  Duplicate this layer until you have enough particles (50 to 100 maybe?).

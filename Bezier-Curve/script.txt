@@ -1,0 +1,39 @@
+Bezier Curve
+This little execise demonstrates how you can get a string of objects to follow a psuedo Bezier curve made from four null layers. First create the four nulls. "Null 1" and "Null 4" will be the anchor points, "Null 2" is the handle for "Null 1" and "Null 3" is the handle for "Null 4". Make "Null 1" the parent of "Null 2" and make "Null 4" the parent of "Null 3". Create a small solid layer (I used 25x25). I also applied a circular mask to the solid (it enhances the "string of pearls" effect). Apply this expression for position:
+
+
+N1 = thisComp.layer("Null 1");
+N2 = thisComp.layer("Null 2");
+N3 = thisComp.layer("Null 3");
+N4 = thisComp.layer("Null 4");
+
+p0 = N1.position;
+p1 = N2.toWorld(N2.anchorPoint);
+p2 = N3.toWorld(N3.anchorPoint);
+p3 = N4.position;
+
+c = 3*(p1 - p0);
+b = 3*(p2 - p1) - c;
+a = p3 - p0 - c - b;
+
+t = index/(thisComp.numLayers - 3);
+((a*t +b )*t + c)*t + p0 
+The solid layer will move to the middle of the psuedo Bezier curve. Duplicate the solid layer a bunch of times and the solids will spread out along the curve. Move the anchor points and the handles around and watch how curve changes. You can even rotate the anchor points. One thing about the formula - "t" represents the position along the curve and has a value that ranges from 0 to 1. At t = 0, the position is at "Null 1" and at t = 1 the position is at "Null 4". So if you wanted to animate something moving along the curve, you would just replace the line that derives t from the layer index and replace it with some function that generates values from 0 to 1. You can also modify the code to use a slider control which has been added to "Null 1" to control compression/expansion. Set the range of the slider from -1 to 1 and replace the "t = index/(thisComp.numLayers - 3);" line above with the following:
+
+
+t0 = index/(thisComp.numLayers - 3);
+s = N1.effect("Slider Control").param("Slider");
+if(s < 0){
+  s += 1;
+  t = t0*s;
+}else{
+  t = s + t0 - s*t0;
+}
+You can add an oscillating expression like this to the slider to cause the solids to surge back and forth:
+
+
+amplitude = .5;
+period = 1.0 //seconds
+
+amplitude*Math.sin(time*Math.PI*2/period);
+Adjust amplitude and period as necessary.

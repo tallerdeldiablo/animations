@@ -1,0 +1,13 @@
+Depth of Field
+This is a very simple expression that is used to tie a camera's focal distance to the position of an object (the ghost in this case). As the ghost moves towards and away from the camera, the other object in the comp goes in and out of focus in a depth-of-field affect.
+
+Apply the following expression to the camera's Focus Distance property:
+
+
+L = thisComp.layer("ghost.ai");
+P1 = L.position - position;
+P2 = toWorldVec([0,0,1]);
+dot(P1,P2);
+Substitute your layer's name for "ghost.ai"
+
+The expression includes a little vector math (dot product) to account for the fact that the camera focuses on a plane and the layer that you use to determine the focal distance might not be directly in front of the camera.

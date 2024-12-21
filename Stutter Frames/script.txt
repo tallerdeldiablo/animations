@@ -1,0 +1,13 @@
+Stutter Frames
+This is an expression that will select random frames over a defined period, giving a "stutter" effect.
+
+In this example, the animation has been set up to run normally for the first 1 second, stutter for .5 seconds, then resume running normally.
+
+To make this work, you enable time remapping for the layer you want to stutter. Then you apply this expression to the time remapping property:
+
+
+start = 1.0; //time to start random frames
+end = 1.5; //time to end random frames
+
+if(time >= start && time <= end){ random(start,end) }else{ time }
+Adjust the start and end times to suit your needs.

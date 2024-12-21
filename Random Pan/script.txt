@@ -1,0 +1,69 @@
+Random Pan and Scan
+You can use these expressions to randomly pan and scan a photo that is larger than your comp.
+
+The expressions will automatically compensate for square pixels in a non-square pixel comp.
+
+Import your image into the comp and add a point control to it.
+
+Add the following expression to the point control:
+
+
+scaleTime = 1;
+holdTime = .5;
+maxScale = 50;
+
+minScale = Math.max(thisComp.width/width,thisComp.height/height)*100;
+totalTime = scaleTime + holdTime
+seed  =Math.floor(time/totalTime) + 2;
+seedRandom(seed,true);
+newScale = random(minScale,maxScale);
+seedRandom(seed - 1,true);
+oldScale = random(minScale,maxScale);
+[oldScale,newScale];
+Add the following expression for position:
+
+
+scaleTime = 1;
+holdTime = .5;
+
+pixFactor = source.pixelAspect/thisComp.pixelAspect;
+totalTime = scaleTime + holdTime;
+segTime = time%totalTime;
+oldScale = effect("Point Control").param("Point")[0];
+newScale = effect("Point Control").param("Point")[1];
+seed = Math.floor(time/totalTime) + 133;
+seedRandom(seed,true);
+maxX = (width/2)*(newScale/100)*pixFactor;
+minX = thisComp.width - (width/2)*(newScale/100)*pixFactor;
+maxY = (height/2)*(newScale/100);
+minY = thisComp.height - (height/2)*(newScale/100);
+newPos = random([minX,minY],[maxX,maxY]);
+seedRandom(seed - 1,true);
+maxX = (width/2)*(oldScale/100)*pixFactor;
+minX = thisComp.width-(width/2)*(oldScale/100)*pixFactor;
+maxY = (height/2)*(oldScale/100);
+minY = thisComp.height - (height/2)*(oldScale/100);
+oldPos = random([minX,minY],[maxX,maxY]);
+if(segTime > scaleTime){
+  newPos
+}else{
+  percent = segTime/scaleTime;
+  ease(percent,oldPos,newPos)
+}
+Add the following expression for scale:
+
+
+scaleTime = 1;
+holdTime = .5;
+
+totalTime  =scaleTime+holdTime;
+segTime = time%totalTime;
+oldScale = effect("Point Control").param("Point")[0];
+newScale = effect("Point Control").param("Point")[1];
+if(segTime > scaleTime){
+  [newScale,newScale]
+}else{
+  percent = segTime/scaleTime;
+  ease(percent,[oldScale,oldScale],[newScale,newScale])
+}
+Adjust the scale time, hold time, and maximum scale to suit your needs. If you change the scale time or hold time, remember to do it in all three expressions.

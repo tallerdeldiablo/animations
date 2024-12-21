@@ -1,0 +1,14 @@
+Pendulum
+This is an expression you can use to generate a decaying pendulum motion.
+
+The pendulum consists of a rectangular solid and a square solid with a circular mask applied. The anchor point of the rectangular solid has been moved to the upper edge. The square solid is parented to the retangular solid.
+
+Apply the following expression to the rotation property of the rectangular solid:
+
+
+veloc = 7; 
+amplitude = 80; 
+decay = .7;
+ 
+amplitude*Math.sin(veloc*time)/Math.exp(decay*time) 
+Adjust the velocity, amplitude and decay parameters to suit your needs.

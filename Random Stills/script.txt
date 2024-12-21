@@ -1,0 +1,15 @@
+Squash and Stretch
+This exercise demonstrates how you can use an expression to apply "squash and stretch" to an object. For this experiment, I imported two Illustrator graphics. I moved their anchor points to the bottom so that the stretching occurs relative to the "floor" of the comp. I keyframed the falling action and split each layer at the point it reaches the floor. I added the following expression to the scale property of each of the stationary pieces:
+
+
+maxDev = 13; // max deviation in pixels
+spd = 30;  //speed of oscillation
+decay = 1.0; //how fast it slows down
+
+t = time - inPoint;
+x = scale[0] + maxDev*Math.sin(spd*t)/Math.exp(decay*t);
+y = scale[0]*scale[1]/x;
+[x,y]
+The formula for "x" is just applying a decaying sine wave to the original scale. "y" is calculated to keep the area of the layer constant.
+
+Adjust the deviation, speed and decay parameters as needed.

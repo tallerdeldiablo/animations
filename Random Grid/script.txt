@@ -1,0 +1,109 @@
+Random Grid Movement
+Here's an expression from the random motion family that will move objects randomly along a grid to a new position on the grid.
+
+To demonstrate this, I applied this expression to the position property of a square solid and then duplicated the solid a bunch of times.
+
+
+columns = 10; //number of columns in grid
+tHold= .2; //hold time (must be less than tmin)
+tMin = .5; //minimum cycle time (can't be zero)
+tMax = 1; //maximum cycle time
+
+gap = this_comp.width/columns;
+origin = [gap,gap];
+xGrid = columns - 1;
+yGrid = Math.floor(this_comp.height/gap) - 1;
+
+start = 0;
+end = 0;
+j = 1;
+
+while (time >= end){
+  j += 1;
+  seedRandom(j,true);
+  start = end;
+  end += random(tMin,tMax);
+}
+targetX = Math.floor(random(0,xGrid)); 
+targetY = Math.floor(random(0,yGrid)); 
+seedRandom(j-1,true);
+x = random(); //this is a throw-away value
+oldX = Math.floor(random(0,xGrid)); 
+oldY = Math.floor(random(0,yGrid)); 
+
+if(targetX == oldX && targetY == oldY){
+  origin + [oldX,oldY]*gap;
+}else if (time - start < tHold){
+  origin + [oldX,oldY]*gap;
+}else{
+  deltaX = Math.abs(targetX - oldX);
+  deltaY = Math.abs(targetY - oldY);
+  xTime = (end - start - tHold)*(deltaX/(deltaX + deltaY));
+  yTime = (end - start - tHold)*(deltaY/(deltaX + deltaY));
+  if (time < start + tHold + xTime){
+    startPos = origin + [oldX,oldY]*gap;
+    targetPos = origin + [targetX,oldY]*gap;
+    easeOut((time - start - tHold)/xTime, startPos, targetPos);
+  }else{
+    startPos = origin + [targetX,oldY]*gap;
+    targetPos = origin + [targetX,targetY]*gap
+    easeIn((time - start - tHold - xTime)/yTime, startPos, targetPos);
+  }
+}
+Note that the number of rows is calculated from the number of columns and that the objects come to rest at the intersection of rows and columns.
+
+Adjust the number of columns, hold time, minimum and maximum cycle time to suit your needs.Random Grid Movement
+Here's an expression from the random motion family that will move objects randomly along a grid to a new position on the grid.
+
+To demonstrate this, I applied this expression to the position property of a square solid and then duplicated the solid a bunch of times.
+
+
+columns = 10; //number of columns in grid
+tHold= .2; //hold time (must be less than tmin)
+tMin = .5; //minimum cycle time (can't be zero)
+tMax = 1; //maximum cycle time
+
+gap = this_comp.width/columns;
+origin = [gap,gap];
+xGrid = columns - 1;
+yGrid = Math.floor(this_comp.height/gap) - 1;
+
+start = 0;
+end = 0;
+j = 1;
+
+while (time >= end){
+  j += 1;
+  seedRandom(j,true);
+  start = end;
+  end += random(tMin,tMax);
+}
+targetX = Math.floor(random(0,xGrid)); 
+targetY = Math.floor(random(0,yGrid)); 
+seedRandom(j-1,true);
+x = random(); //this is a throw-away value
+oldX = Math.floor(random(0,xGrid)); 
+oldY = Math.floor(random(0,yGrid)); 
+
+if(targetX == oldX && targetY == oldY){
+  origin + [oldX,oldY]*gap;
+}else if (time - start < tHold){
+  origin + [oldX,oldY]*gap;
+}else{
+  deltaX = Math.abs(targetX - oldX);
+  deltaY = Math.abs(targetY - oldY);
+  xTime = (end - start - tHold)*(deltaX/(deltaX + deltaY));
+  yTime = (end - start - tHold)*(deltaY/(deltaX + deltaY));
+  if (time < start + tHold + xTime){
+    startPos = origin + [oldX,oldY]*gap;
+    targetPos = origin + [targetX,oldY]*gap;
+    easeOut((time - start - tHold)/xTime, startPos, targetPos);
+  }else{
+    startPos = origin + [targetX,oldY]*gap;
+    targetPos = origin + [targetX,targetY]*gap
+    easeIn((time - start - tHold - xTime)/yTime, startPos, targetPos);
+  }
+}
+Note that the number of rows is calculated from the number of columns and that the objects come to rest at the intersection of rows and columns.
+
+Adjust the number of columns, hold time, minimum and maximum cycle time to suit your needs.

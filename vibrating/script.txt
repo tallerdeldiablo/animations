@@ -1,0 +1,17 @@
+Vibrating Strings
+This is a vibrating string simulation that is accomplished with a simple oscillating expression applied to a slider control, which is then linked to the Tangent controls of the Bezier Warp filter (AE Pro version only).
+
+You start by creating a long, narrow solid. You apply a slider control to the solid and apply this expression to it:
+
+
+amp = 15; //amplitude (pixels)
+freq = 10; //frequency (cycles per second)
+
+amp*Math.sin(freq*time*Math.PI*2)
+Set "amp" to the desired amplitude and "freq" to the desired vibration frequency.
+
+Then apply the Bezier Warp filter and apply this expression to the Top Left Tangent, Top Right Tangent, Bottom Right Tangent, and Bottom Left Tangent:
+
+
+value + [0,effect("Slider Control").param("Slider")]
+For this example, I duplicated the solid twice and changed the frequency value for the copies.
