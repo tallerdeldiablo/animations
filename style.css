@@ -80,11 +80,19 @@ main {
   padding: 15px;
 }
 
+/* Animation Preview Section */
 .animation-box {
-  width: 100%;
-  height: 500px;
-  border: 2px solid var(--light-dark);
+  width: 80%; /* Slightly larger width */
+  height: 400px; /* Consistent height */
+  margin: 0 auto;
   border-radius: var(--border-radius);
+  border: 2px solid var(--light-dark);
+}
+
+iframe#animation-container {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 .details-box {
