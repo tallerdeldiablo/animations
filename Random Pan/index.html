@@ -7,68 +7,8 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Random Pan and Scan Expressions
+  <canvas id="animationCanvas" width="200" height="100"></canvas>
 
-// Point Control Expression
-scaleTime = 1;
-holdTime = .5;
-maxScale = 50;
-
-minScale = Math.max(thisComp.width/width,thisComp.height/height)*100;
-totalTime = scaleTime + holdTime
-seed  =Math.floor(time/totalTime) + 2;
-seedRandom(seed,true);
-newScale = random(minScale,maxScale);
-seedRandom(seed - 1,true);
-oldScale = random(minScale,maxScale);
-[oldScale,newScale];
-
-// Position Expression
-scaleTime = 1;
-holdTime = .5;
-
-pixFactor = source.pixelAspect/thisComp.pixelAspect;
-totalTime = scaleTime + holdTime;
-segTime = time%totalTime;
-oldScale = effect("Point Control").param("Point")[0];
-newScale = effect("Point Control").param("Point")[1];
-seed = Math.floor(time/totalTime) + 133;
-seedRandom(seed,true);
-maxX = (width/2)*(newScale/100)*pixFactor;
-minX = thisComp.width - (width/2)*(newScale/100)*pixFactor;
-maxY = (height/2)*(newScale/100);
-minY = thisComp.height - (height/2)*(newScale/100);
-newPos = random([minX,minY],[maxX,maxY]);
-seedRandom(seed - 1,true);
-maxX = (width/2)*(oldScale/100)*pixFactor;
-minX = thisComp.width-(width/2)*(oldScale/100)*pixFactor;
-maxY = (height/2)*(oldScale/100);
-minY = thisComp.height - (height/2)*(oldScale/100);
-oldPos = random([minX,minY],[maxX,maxY]);
-if(segTime > scaleTime){
-  newPos
-}else{
-  percent = segTime/scaleTime;
-  ease(percent,oldPos,newPos)
-}
-
-// Scale Expression
-scaleTime = 1;
-holdTime = .5;
-
-totalTime  =scaleTime+holdTime;
-segTime = time%totalTime;
-oldScale = effect("Point Control").param("Point")[0];
-newScale = effect("Point Control").param("Point")[1];
-if(segTime > scaleTime){
-  [newScale,newScale]
-}else{
-  percent = segTime/scaleTime;
-  ease(percent,[oldScale,oldScale],[newScale,newScale])
-}
-    </code></pre>
     <script src="js/randomPanAndScan.js"></script>
  
 </body>

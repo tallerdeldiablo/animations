@@ -4,61 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jack-in-the-Box Animation</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        canvas {
-            border: 1px solid black;
-        }
-        .after-effects-script {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #fff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 800px;
-        }
-        .after-effects-script h3 {
-            margin: 0 0 10px;
-            font-size: 18px;
-            color: #333;
-        }
-        .after-effects-script pre {
-            background-color: #f8f8f8;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            color: #222;
-            overflow-x: auto;
-            text-align: left;
-        }
-    </style>
+
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="jackInTheBoxAnimation.js"></script>
 
-    <!-- New Div with After Effects Script Info -->
-    <div class="after-effects-script">
-        <h3>After Effects Script</h3>
-        <pre>
-veloc = 35; 
-amplitude = 30; 
-decay = 1.0; 
-y = amplitude * Math.cos(veloc * time) / Math.exp(decay * time);
-value + [0, y]
-        </pre>
-    </div>
+
+  
 </body>
 </html>

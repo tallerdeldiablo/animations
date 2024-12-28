@@ -7,72 +7,7 @@
     <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Random Motion Expressions
-
-// Position
-tMin = .25; //minimum segment duration
-tMax = 1.0; //maximum segment duration
-minVal = [0.1*thisComp.width, 0.1*thisComp.height];
-maxVal = [0.9*thisComp.width, 0.9*thisComp.height];
-
-end = 0; 
-j = 0; 
-while (time >= end){ 
-  j ++; 
-  seedRandom(j,true); 
-  start = end; 
-  end += random(tMin,tMax); 
-} 
-endVal =  random(minVal,maxVal);
-seedRandom(j-1,true);
-dummy = random(); //this is a throw-away value
-startVal =  random(minVal,maxVal);
-ease(time,start,end,startVal,endVal)
-
-// Rotation
-tMin = .25; //minimum segment duration
-tMax = 1.0; //maximum segment duration
-minVal = 0;
-maxVal = 720;
-
-end = 0;
-j = 0;
-while ( time >= end){
-  j ++;
-  seedRandom(j,true);
-  start = end;
-  end += random(tMin,tMax);
-}
-endVal =  random(minVal,maxVal);
-seedRandom(j - 1,true);
-dummy = random(); //this is a throw-away value
-startVal =  random(minVal,maxVal);
-ease(time,start,end,startVal,endVal)
-
-// Scale
-tMin = .25; //minimum segment duration
-tMax = 1.0; //maximum segment duration
-minVal = 75;
-maxVal = 150;
-
-end = 0; 
-j = 0; 
-while (time >= end){ 
-  j ++; 
-  seedRandom(j,true); 
-  start = end; 
-  end += random(tMin,tMax); 
-} 
-s = random(minVal,maxVal);
-endVal = [s,s];
-seedRandom(j-1,true);
-dummy = random(); //this is a throw-away value
-s = random(minVal,maxVal);
-startVal = [s,s]
-ease(time,start,end,startVal,endVal)
-    </code></pre>
+  <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="js/randomMotion.js"></script>
  
 </body>

@@ -1,5 +1,4 @@
-sassaas
-as
+
 This is a set of simple expressions that will position four lines at the edges of a rectangular layer and maintain their relationship to the rectangle as it moves and scales.
 
 In this example, the rectangle is named "master", the vertical lines are thin solids the height of the comp, and the horizontal lines are thin solids the width of the comp.

@@ -8,21 +8,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Random Stills Expressions
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
 
-// Slider Control Expression
-duration = .125; // length of each cut (seconds)
-
-seed = Math.floor(time/duration) + 1; 
-seedRandom(seed,true); 
-Math.floor(random(1,index)) 
-
-// Opacity Expression
-slider = thisComp.layer("Null 1").effect("Slider Control").param("Slider")
-if(index == slider){ 100 }else{ 0 }
-    </code></pre>
     <script src="js/randomStills.js"></script>
  
 </body>

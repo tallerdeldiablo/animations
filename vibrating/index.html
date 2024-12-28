@@ -7,19 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Vibrating Strings Expressions
-
-// Slider Control Expression
-amp = 15; // amplitude (pixels)
-freq = 10; // frequency (cycles per second)
-
-amp*Math.sin(freq*time*Math.PI*2)
-
-// Tangent Control Expression
-value + [0,effect("Slider Control").param("Slider")]
-    </code></pre>
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="js/vibratingStrings.js"></script>
  
 </body>

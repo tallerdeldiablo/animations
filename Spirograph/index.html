@@ -7,21 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Spirograph Expression
-
-r1 = 43; 
-r2 = -14; 
-o = 53; 
-v = 15;
-s = 2.5;
-
-r = r1 + r2; 
-x = r*Math.cos(time*v) - (r2 + o)*Math.cos(r*time*v/r2); 
-y = r*Math.sin(time*v) - (r2 + o)*Math.sin(r*time*v/r2); 
-[s*x + thisComp.width/2, s*y + thisComp.height/2];
-    </code></pre>
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="js/spirograph.js"></script>
  
 </body>

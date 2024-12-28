@@ -7,28 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-
-      
-tMin = .5; //minimum segment duration 
-tMax = 2;  //maximum segment duration
-
-end = 0; 
-j = 0; 
-while (time >= end){ 
-  j++; 
-  seedRandom(j,true); 
-  start = end; 
-  end += random(tMin,tMax); 
-} 
-endVal = random(thisComp.width); 
-seedRandom(j - 1,true); 
-x = random(); //this is a throw-away value 
-startVal = random()*this_comp.width;
-x = ease(time,start,end,startVal,endVal);
-[x,value[1]]
-    </code></pre>
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="js/randomLines.js"></script>
  
 </body>

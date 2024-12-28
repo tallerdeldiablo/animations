@@ -7,19 +7,7 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <canvas id="animationCanvas" width="800" height="600"></canvas>
-    <pre><code>
-// After Effects Squash and Stretch Expression
-
-maxDev = 13; // max deviation in pixels
-spd = 30;  //speed of oscillation
-decay = 1.0; //how fast it slows down
-
-t = time - inPoint;
-x = scale[0] + maxDev*Math.sin(spd*t)/Math.exp(decay*t);
-y = scale[0]*scale[1]/x;
-[x,y]
-    </code></pre>
+    <canvas id="animationCanvas" width="200" height="100"></canvas>
     <script src="squashAndStretch.js"></script>
  
 </body>
