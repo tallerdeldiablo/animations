@@ -53,7 +53,7 @@ main {
   width: 75%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 5px;
 }
 
 .card {
@@ -64,8 +64,8 @@ main {
   padding: 15px;
 }
 .animation-preview {
-  width: 400px;
-  height: 300px;
+  width: 420px;
+  height: 320px;
   overflow: hidden;
   margin: 5px auto; /* Center it */
 }
@@ -73,7 +73,7 @@ main {
 .card-header {
   background: linear-gradient(90deg, var(--primary), var(--secondary));
   color: var(--dark);
-  padding: 15px;
+  padding: 2px;
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -82,8 +82,8 @@ main {
 .card-body {
   display: flex;
   flex-direction: column; /* Ensures buttons are stacked vertically */
-  gap: 10px; /* Adds spacing between buttons */
-  padding: 15px;
+  gap: 5px; /* Adds spacing between buttons */
+  padding: 5px;
 }
 
 .animation-box {
@@ -125,4 +125,21 @@ iframe#animation-container {
 .btn:hover {
   transform: scale(1.05);
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+
+.animation-source {
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--dark); /* Usar una variable global para mantener coherencia */
+  text-align: left;
+}
+
+.animation-source a {
+  color: var(--secondary); /* Estilo para los enlaces */
+  text-decoration: none;
+}
+
+.animation-source a:hover {
+  text-decoration: underline;
 }
