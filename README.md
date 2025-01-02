@@ -33,5 +33,5 @@ You can preview the entire app here:
 1. Clone the repository:
    ```bash
 
-   git clone https://github.com/tallerdeldiablo/JS-Animations-Showcase.git
+  git@github.com:tallerdeldiablo/animations.git
 
