@@ -7,13 +7,6 @@ The **JS Animations Showcase** brings some of his iconic concepts into a browser
 
 ---
 
-## **Features**
-- **Dynamic Animation Previews**: Explore animations like Random Motion, Swinging Light, and Depth of Field.
-- **Animation Details**: View descriptions and expressions adapted from Dan Ebberts’ original scripts.
-- **Interactive Design**: Browse animations easily in a clean and modern interface.
-
----
-
 ## **Live Preview**
 You can preview the entire app here:  
 [**JS Animations Showcase**](https://tallerdeldiablo.github.io/animations/)
