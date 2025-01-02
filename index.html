@@ -72,31 +72,31 @@
     };
 
     const displayRepoContents = contents => {
-      repoContainerEl.innerHTML = '';
-      contents.forEach(item => {
-        if (item.type === 'dir') {
-          const button = document.createElement('button');
-          button.textContent = `${item.name} Animation`;
-          button.classList.add('btn');
-          button.onclick = () => {
-            const animationContainerEl = document.querySelector('#animation-container');
-            animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
+  repoContainerEl.innerHTML = '';
+  // Skip the first file/folder and iterate through the rest
+  contents.slice(1).forEach(item => { // Start from index 1
+    if (item.type === 'dir') {
+      const button = document.createElement('button');
+      button.textContent = `${item.name} Animation`;
+      button.classList.add('btn');
+      button.onclick = () => {
+        const animationContainerEl = document.querySelector('#animation-container');
+        animationContainerEl.src = `https://tallerdeldiablo.github.io/animations/${item.name}/`;
 
-            const scriptFile = `${item.name}/script.txt`;
-            fetch(scriptFile)
-              .then(response => response.text())
-              .then(data => {
-                document.getElementById('afterEffectsText').textContent = data;
-              })
-              .catch(() => {
-                document.getElementById('afterEffectsText').textContent = 'Script not available.';
-              });
-          };
-          repoContainerEl.appendChild(button);
-        }
-      });
-    };
-
+        const scriptFile = `${item.name}/script.txt`;
+        fetch(scriptFile)
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('afterEffectsText').textContent = data;
+          })
+          .catch(() => {
+            document.getElementById('afterEffectsText').textContent = 'Script not available.';
+          });
+      };
+      repoContainerEl.appendChild(button);
+    }
+  });
+};
     getRepoContents('tallerdeldiablo', 'animations');
   </script>
 </body>
