@@ -14,6 +14,12 @@ The **JS Animations Showcase** brings some of his iconic concepts into a browser
 
 ---
 
+## **Live Preview**
+You can preview the entire app here:  
+[**JS Animations Showcase**](https://tallerdeldiablo.github.io/animations/)
+
+---
+
 ## **Table of Contents**
 1. [Installation](#installation)
 2. [Usage](#usage)
@@ -26,4 +32,6 @@ The **JS Animations Showcase** brings some of his iconic concepts into a browser
 ## **Installation**
 1. Clone the repository:
    ```bash
+
    git clone https://github.com/tallerdeldiablo/JS-Animations-Showcase.git
+
