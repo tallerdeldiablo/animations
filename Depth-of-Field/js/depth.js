@@ -1,77 +1,66 @@
 const canvas = document.getElementById('animationCanvas');
 const ctx = canvas.getContext('2d');
 
-const compWidth = canvas.width;
-const compHeight = canvas.height;
+// Canvas dimensions
+canvas.width = 400;
+canvas.height = 300;
 
-let camera = {
-    position: { x: compWidth / 2, y: compHeight / 2, z: 500 },
-    focalDistance: 500,
-};
+// Object and camera settings
+const object = { x: canvas.width / 2, y: canvas.height / 2, z: 300, radius: 40 }; // The "ghost" object
+const camera = { x: canvas.width / 2, y: canvas.height / 2, z: 0, focalLength: 100 }; // Camera
+const focusDistance = object.z; // Initial focus distance
 
-let ghost = {
-    position: { x: compWidth / 2, y: compHeight / 2, z: 0 },
-    speed: 2,
-};
+// Depth of field range
+const nearFocus = 50; // Distance at which objects start to blur
+const farFocus = 500; // Distance beyond which objects are fully blurred
 
-// Function to calculate the dot product of two vectors
-function dotProduct(vec1, vec2) {
-    return vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
+// Animation state
+let objectDirection = 1; // Moving closer (+1) or farther (-1)
+
+// Calculate blur based on depth
+function calculateBlur(distance) {
+  if (distance < nearFocus || distance > farFocus) {
+    return 5; // Max blur for objects outside focus range
+  }
+  const focusRange = farFocus - nearFocus;
+  const blurFactor = Math.abs(distance - focusDistance) / focusRange;
+  return blurFactor * 5; // Scale blur up to a maximum of 5
 }
 
-// Function to normalize a vector
-function normalize(vec) {
-    const length = Math.sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-    return { x: vec.x / length, y: vec.y / length, z: vec.z / length };
+// Draw object with blur
+function drawObject(object, blur) {
+  ctx.filter = `blur(${blur}px)`; // Apply blur effect
+  ctx.fillStyle = 'rgba(255, 100, 100, 1)';
+  ctx.beginPath();
+  ctx.arc(object.x, object.y, object.radius, 0, Math.PI * 2); // Increased radius
+  ctx.fill();
+  ctx.filter = 'none'; // Reset filter
 }
 
-// Function to calculate the camera's focus distance
-function calculateFocusDistance() {
-    const P1 = {
-        x: ghost.position.x - camera.position.x,
-        y: ghost.position.y - camera.position.y,
-        z: ghost.position.z - camera.position.z,
-    };
-    const P2 = normalize({ x: 0, y: 0, z: -1 });
-    return dotProduct(P1, P2);
-}
-
-// Function to draw the scene
-function draw() {
-    ctx.clearRect(0, 0, compWidth, compHeight);
-
-    // Calculate the focus distance based on the ghost's position
-    camera.focalDistance = calculateFocusDistance();
-
-    // Simulate depth of field by changing the blur based on focus distance
-    const blurAmount = Math.abs(camera.focalDistance - ghost.position.z) / 100;
-
-    // Draw background object (blurred based on depth of field)
-    ctx.filter = `blur(${blurAmount}px)`;
-    ctx.fillStyle = 'green';
-    ctx.beginPath();
-    ctx.arc(compWidth / 2, compHeight / 2, 50, 0, 2 * Math.PI);
-    ctx.fill();
-
-    // Draw ghost (always in focus)
-    ctx.filter = 'none';
-    ctx.fillStyle = 'blue';
-    ctx.beginPath();
-    ctx.arc(ghost.position.x, ghost.position.y, 15, 0, 2 * Math.PI);
-    ctx.fill();
-}
-
-// Function to animate the scene
+// Animation loop
 function animate() {
-    // Update ghost's position
-    ghost.position.z += ghost.speed;
-    if (ghost.position.z > 500 || ghost.position.z < 0) {
-        ghost.speed *= -1;
-    }
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    draw();
-    requestAnimationFrame(animate);
+  // Update object position (simulate movement along z-axis)
+  object.z += objectDirection * 2;
+  if (object.z > 500 || object.z < 50) {
+    objectDirection *= -1; // Reverse direction when hitting bounds
+  }
+
+  // Calculate blur based on object's distance from focus
+  const blur = calculateBlur(object.z);
+
+  // Draw object
+  drawObject(object, blur);
+
+  // Draw depth info
+  ctx.fillStyle = 'white';
+  ctx.font = '16px Arial';
+  ctx.fillText(`Object Depth: ${object.z}`, 10, 20);
+  ctx.fillText(`Blur: ${blur.toFixed(2)}px`, 10, 40);
+
+  requestAnimationFrame(animate);
 }
 
-// Start the animation
+// Start animation
 animate();
